@@ -1,0 +1,21 @@
+# Production deployment config for https://artifact-pages.dev. Non-secret:
+# credentials come from the CLI default environment names (CF_R2_ACCESS_KEY_ID,
+# CF_R2_SECRET_ACCESS_KEY, CF_API_TOKEN), supplied as repository secrets in CI.
+schemaVersion: 1
+provider: cloudflare
+cloudflare:
+  accountId: 9ac354c8aa31d424224d8c4f3aa8ba2a
+  zoneId: 3eb221959ea55267ea2bfb93af45ef7e
+  publicBaseURL: https://artifact-pages.dev
+  # bucket defaults to artifact-pages
+sites:
+  guide:
+    name: Guide
+    description: Adopt, publish, and read with Git Artifact Pages. 導入・公開・閲覧のガイド。
+    repository: tasuku43/artifact-pages-docs
+    sourcePath: sites/guide
+  architecture:
+    name: Architecture
+    description: How Git Artifact Pages works and why. 仕組みと設計の考え方。
+    repository: tasuku43/artifact-pages-docs
+    sourcePath: sites/architecture
