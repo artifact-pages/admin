@@ -1,0 +1,8 @@
+# Production Terraform credentials come from ~/.config/artifact-pages/production.env
+# (mode 600, outside Git), loaded in this directory only. mise skips a missing
+# file; the zone guard in main.tf then refuses any zone but artifact-pages.dev.
+[tools]
+terraform = "1.16.4"
+
+[env]
+_.file = "~/.config/artifact-pages/production.env"

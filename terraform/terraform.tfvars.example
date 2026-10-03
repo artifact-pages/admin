@@ -1,0 +1,14 @@
+# Copy to terraform.tfvars (ignored).
+cloudflare_account_id = "9ac354c8aa31d424224d8c4f3aa8ba2a"
+cloudflare_zone_id    = "3eb221959ea55267ea2bfb93af45ef7e"
+public_hostname       = "artifact-pages.dev"
+
+preview_retention_days = 1
+connect_custom_domain  = true
+
+waf_custom_rules = {
+  presets = {
+    https_only   = true
+    ip_allowlist = ["192.0.2.10/32"] # replace with the operator's current public address
+  }
+}
