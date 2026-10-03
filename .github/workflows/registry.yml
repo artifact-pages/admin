@@ -1,0 +1,49 @@
+# Reconcile the production registry with artifact-pages.yaml.
+# Pull requests get a dry-run plan; merges to main apply it.
+name: Registry
+
+on:
+  pull_request:
+    paths: [artifact-pages.yaml]
+  push:
+    branches: [main]
+    paths: [artifact-pages.yaml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: registry
+  cancel-in-progress: false
+
+jobs:
+  register:
+    runs-on: ubuntu-24.04
+    environment: ${{ github.event_name != 'pull_request' && 'production' || '' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Register the complete site set
+        id: register
+        uses: tasuku43/git-artifact-pages/actions/admin@v0.1.2
+        with:
+          operation: registry-register
+          config: artifact-pages.yaml
+          dry-run: ${{ github.event_name == 'pull_request' }}
+        env:
+          CF_R2_ACCESS_KEY_ID: ${{ secrets.CF_R2_ACCESS_KEY_ID }}
+          CF_R2_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_ACCESS_KEY }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      - name: Summarize
+        env:
+          OUTCOME: ${{ steps.register.outputs.outcome }}
+          CHANGES: ${{ steps.register.outputs.changes_json }}
+        run: |
+          {
+            echo "### Registry: $OUTCOME"
+            echo '```json'
+            jq . <<<"$CHANGES"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

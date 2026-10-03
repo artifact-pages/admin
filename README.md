@@ -34,11 +34,11 @@ mise exec -- terraform apply ../.local/terraform/plan.tfplan
 
 ## Secrets
 
-The workflows read these three repository-level secrets, shared by the `plan` (dry-run) and `production` environments:
+The workflows read these three repository-level secrets. The `production` environment (limited to `main`) guards the runs that write:
 
 | Secret | Cloudflare permission |
 | --- | --- |
 | `CF_R2_ACCESS_KEY_ID`, `CF_R2_SECRET_ACCESS_KEY` | R2 key pair for bucket `artifact-pages` (Workers R2 Storage Bucket Item Write) |
 | `CF_API_TOKEN` | Cache Purge on zone `artifact-pages.dev` |
 
-While the owner is the only writer, a same-repository PR can reach write credentials; before adding collaborators, give `plan` a read-only R2 key pair as an environment secret, and limit `production` to `main`.
+While the owner is the only writer, a same-repository PR can reach write credentials; before adding collaborators, move the write secrets into the `production` environment so PR dry-runs no longer see them.
