@@ -20,6 +20,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-24.04
+    environment: production
     steps:
       - name: Deploy the pinned web app
         uses: artifact-pages/app-deploy-action@v0.1.0
