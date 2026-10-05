@@ -20,6 +20,9 @@ concurrency:
 jobs:
   register:
     runs-on: ubuntu-24.04
+    # Credentials are scoped to the production environment; pull requests run
+    # without it (dry-run).
+    environment: ${{ github.event_name != 'pull_request' && 'production' || '' }}
     steps:
       - name: Register the complete site set
         uses: artifact-pages/registry-action@v0.1.0
