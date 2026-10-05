@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Register the complete site set
-        uses: tasuku43/git-artifact-pages/actions/admin@v0.2.0
+        uses: tasuku43/git-artifact-pages/actions/admin@v0.2.1
         with:
           operation: registry-register
           # Real registry write on main only; pull requests are a dry-run.

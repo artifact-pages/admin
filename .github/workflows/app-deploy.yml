@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Deploy the pinned web app
-        uses: tasuku43/git-artifact-pages/actions/admin@v0.2.0
+        uses: tasuku43/git-artifact-pages/actions/admin@v0.2.1
         with:
           operation: app-deploy
           dry-run: ${{ inputs.dry-run }}
