@@ -14,7 +14,7 @@ data "cloudflare_zone" "target" {
 module "artifact_pages" {
   # Pinned to a reviewed commit until the module is published on the Terraform
   # Registry (IMP-38); then switch to the Registry source and an exact version.
-  source = "git::https://github.com/tasuku43/terraform-cloudflare-artifact-pages.git?ref=208abf5eb6a7323e6161b7a798ba401dcf149c9f"
+  source = "git::https://github.com/artifact-pages/terraform-cloudflare-artifact-pages.git?ref=208abf5eb6a7323e6161b7a798ba401dcf149c9f"
 
   account_id             = var.cloudflare_account_id
   zone_id                = data.cloudflare_zone.target.zone_id

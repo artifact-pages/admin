@@ -1,12 +1,12 @@
 # artifact-pages-admin
 
-Production admin repository for <https://artifact-pages.dev>, the public Git Artifact Pages deployment. It uses the released [Git Artifact Pages](https://github.com/tasuku43/git-artifact-pages) packages the same way any adopter does:
+Production admin repository for <https://artifact-pages.dev>, the public Git Artifact Pages deployment. It uses the released [Git Artifact Pages](https://github.com/artifact-pages/artifact-pages) packages the same way any adopter does:
 
 | Part | Here | Consumes |
 | --- | --- | --- |
-| Registry: which sites exist and which repository may publish each | `artifact-pages.yaml` | `tasuku43/git-artifact-pages/actions/admin@v0.1.2` |
-| Web app deployment | `.github/workflows/app-deploy.yml` (manual) | The web bundle pinned by the same Action version |
-| Infrastructure: R2 bucket, custom domain, routing, cache, CSP and WAF rules | `terraform/` | `terraform-cloudflare-artifact-pages` at a reviewed commit, moving to the Terraform Registry |
+| Registry: which sites exist and which repository may publish each | `artifact-pages.yaml` | `artifact-pages/registry-action@v0.1.0` |
+| Web app deployment | `.github/workflows/app-deploy.yml` (manual) | The web bundle matching `artifact-pages/app-deploy-action@v0.1.0` |
+| Infrastructure: R2 bucket, custom domain, routing, cache, CSP and WAF rules | `terraform/` | `artifact-pages/terraform-cloudflare-artifact-pages` at a reviewed commit, moving to the Terraform Registry |
 
 The sites' content lives in their own repositories. `guide` and `architecture` are published from [artifact-pages-docs](https://github.com/tasuku43/artifact-pages-docs).
 
