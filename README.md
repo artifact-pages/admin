@@ -30,7 +30,7 @@ mise exec -- terraform plan -out=../.local/terraform/plan.tfplan
 mise exec -- terraform apply ../.local/terraform/plan.tfplan
 ```
 
-`terraform/mise.toml` loads `CLOUDFLARE_API_TOKEN` (Terraform token: zone `artifact-pages.dev` rules, DNS and R2 management) from `~/.config/artifact-pages/production.env`. State is local in the ignored `.local/terraform/`. A zone guard fails the plan for any zone other than `artifact-pages.dev`.
+`terraform/mise.toml` loads `CLOUDFLARE_API_TOKEN` (Terraform token: zone `artifact-pages.dev` rules including Config Rules Edit, DNS and R2 management) from `~/.config/artifact-pages/production.env`. State is local in the ignored `.local/terraform/`. A zone guard fails the plan for any zone other than `artifact-pages.dev`.
 
 ## Secrets
 
