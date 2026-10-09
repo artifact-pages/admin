@@ -1,5 +1,6 @@
-# Deploy the web app pinned by the admin Action's version. Deployment is always
-# an explicit run: upgrading the Action ref alone never deploys the app.
+# Deploy the web app pinned by `web.version` in `artifact-pages.yaml`.
+# Deployment is always an explicit run: changing the Action ref alone never
+# deploys the app.
 name: App deploy
 
 on:
@@ -23,7 +24,7 @@ jobs:
     environment: production
     steps:
       - name: Deploy the pinned web app
-        uses: artifact-pages/app-deploy-action@v0.1.0
+        uses: artifact-pages/app-deploy-action@0c2161060c1874be2cdddd9db1b5f1abcfe9a237 # v0.1.0
         with:
           dry-run: ${{ inputs.dry-run }}
         env:
