@@ -12,7 +12,7 @@ The sites' content lives in their own repositories. `guide` and `architecture` a
 
 ## Registry
 
-Edit `artifact-pages.yaml`. A pull request runs a dry-run and shows the planned changes in the job summary. Merging to `main` applies them. The file always lists the complete site set: removing a site there unregisters it and deletes its published content.
+Edit `artifact-pages.yaml`. Pull requests and main pushes show a dry-run plan in the job summary during the initial release rollout; use `workflow_dispatch` on `main` for the approved registry write. The file always lists the complete site set: removing a site there unregisters it and deletes its published content.
 
 ## App deployment
 
