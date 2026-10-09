@@ -1,6 +1,6 @@
 # Reconcile the production registry with artifact-pages.yaml.
-# Pull requests get a dry-run plan. During the initial release rollout, main
-# pushes stay dry-run; a workflow_dispatch on main remains the manual write path.
+# Pull requests get a dry-run plan; main pushes and manual runs apply registry
+# changes.
 name: Registry
 
 on:
@@ -28,8 +28,9 @@ jobs:
       - name: Register the complete site set
         uses: artifact-pages/registry-action@c5edcfaa4ae9a479cb52b3489daa8925cf5eec29 # v0.1.0
         with:
-          # Hold automatic registry writes until the rollout has been accepted.
+          # Main pushes and manual runs write; pull requests and other refs are dry-runs.
           publish-on: |
+            push:refs/heads/main
             workflow_dispatch:refs/heads/main
         env:
           CF_R2_ACCESS_KEY_ID: ${{ secrets.CF_R2_ACCESS_KEY_ID }}
