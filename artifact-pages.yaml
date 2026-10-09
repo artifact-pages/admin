@@ -8,6 +8,10 @@ cloudflare:
   zoneId: 3eb221959ea55267ea2bfb93af45ef7e
   publicBaseURL: https://artifact-pages.dev
   # bucket defaults to artifact-pages
+cli:
+  version: 0.2.0
+web:
+  version: 0.1.0
 sites:
   guide:
     name: Guide
