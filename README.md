@@ -6,7 +6,7 @@ Production admin repository for <https://artifact-pages.dev>, the public Git Art
 | --- | --- | --- |
 | Registry: which sites exist and which repository may publish each | `artifact-pages.yaml` | `artifact-pages/registry-action@v0.1.0` |
 | Web app deployment | `.github/workflows/app-deploy.yml` (manual) | The web bundle matching `artifact-pages/app-deploy-action@v0.1.0` |
-| Infrastructure: R2 bucket, custom domain, routing, cache, CSP and WAF rules | `terraform/` | `artifact-pages/terraform-cloudflare-artifact-pages` at a reviewed commit, moving to the Terraform Registry |
+| Infrastructure: R2 bucket, custom domain, routing, cache, CSP and WAF rules | `terraform/` | [`artifact-pages/terraform-cloudflare-artifact-pages` at `v0.1.0`](https://github.com/artifact-pages/terraform-cloudflare-artifact-pages/tree/v0.1.0) |
 
 The sites' content lives in their own repositories. `guide` and `architecture` are published from [artifact-pages/docs](https://github.com/artifact-pages/docs).
 
@@ -30,7 +30,7 @@ mise exec -- terraform plan -out=../.local/terraform/plan.tfplan
 mise exec -- terraform apply ../.local/terraform/plan.tfplan
 ```
 
-`terraform/mise.toml` loads `CLOUDFLARE_API_TOKEN` (Terraform token: zone `artifact-pages.dev` rules including Config Rules Edit, DNS and R2 management) from `~/.config/artifact-pages/production.env`. State is local in the ignored `.local/terraform/`. A zone guard fails the plan for any zone other than `artifact-pages.dev`.
+`terraform/mise.toml` loads `CLOUDFLARE_API_TOKEN` (Terraform token: zone `artifact-pages.dev` rules including Config Rules Edit, DNS and R2 management) from `~/.config/artifact-pages/production.env`. State is stored in the private `artifact-pages-tfstate` R2 bucket under key `admin-production`, with locking; the backend reads an external credentials profile. Do not source the backend `tfstate.env` into Terraform. See [`terraform/README.md`](terraform/README.md) for setup and safe planning instructions. A zone guard fails the plan for any zone other than `artifact-pages.dev`.
 
 ## Secrets
 
