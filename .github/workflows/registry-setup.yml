@@ -1,0 +1,62 @@
+name: Registry setup
+
+on:
+  pull_request:
+    paths:
+      - artifact-pages.yaml
+      - .github/actions/site-sync/**
+      - .github/workflows/registry.yml
+      - .github/workflows/publish-site.yml
+      - .github/workflows/preview-site.yml
+      - .github/workflows/registry-setup.yml
+  push:
+    branches: [main]
+    paths:
+      - artifact-pages.yaml
+      - .github/actions/site-sync/**
+      - .github/workflows/registry.yml
+      - .github/workflows/publish-site.yml
+      - .github/workflows/preview-site.yml
+      - .github/workflows/registry-setup.yml
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    # The setup generator ships in CLI 0.3.0; artifact-pages.yaml stays on
+    # CLI 0.2.0 for the currently released Actions.
+    env:
+      CLI_VERSION: 0.3.0
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Download the released CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          asset="artifact-pages_v${CLI_VERSION}_linux_amd64"
+          checksums="artifact-pages_v${CLI_VERSION}_checksums.txt"
+          release="https://github.com/artifact-pages/artifact-pages/releases/download/v${CLI_VERSION}"
+          curl --fail --location --silent --show-error "$release/$asset" --output "$RUNNER_TEMP/$asset"
+          curl --fail --location --silent --show-error "$release/$checksums" --output "$RUNNER_TEMP/$checksums"
+          grep -Fq "  $asset" "$RUNNER_TEMP/$checksums"
+          (
+            cd "$RUNNER_TEMP"
+            sha256sum --check --ignore-missing "$checksums"
+          )
+          chmod +x "$RUNNER_TEMP/$asset"
+          version="$("$RUNNER_TEMP/$asset" version --format json | jq -er '.version')"
+          test "$version" = "$CLI_VERSION"
+
+      - name: Check generated admin files
+        run: >-
+          "$RUNNER_TEMP/artifact-pages_v${CLI_VERSION}_linux_amd64"
+          registry setup
+          --directory "$GITHUB_WORKSPACE"
+          --config artifact-pages.yaml
+          --repository artifact-pages/admin
+          --check
