@@ -25,10 +25,9 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-24.04
-    # The setup generator ships in CLI 0.3.0; artifact-pages.yaml stays on
-    # CLI 0.2.0 for the currently released Actions.
+    # The setup generator and the writer both use CLI 0.4.1 with the v0.2.0 Actions.
     env:
-      CLI_VERSION: 0.3.0
+      CLI_VERSION: 0.4.1
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
