@@ -1,0 +1,19 @@
+# Disposable AWS verification deployment (T15). Not production; see .github/workflows/aws-verify.yml.
+schemaVersion: 1
+provider: aws
+aws:
+  accountId: "231136241959"
+  region: us-east-1
+  bucket: artifact-pages-231136241959-us-east-1
+  distributionId: ECFTIR5GVPQDF
+  namePrefix: artifact-pages-aws-verify
+cli:
+  version: 0.4.2
+web:
+  version: 0.3.1
+sites:
+  aws-verify:
+    name: AWS verify
+    description: Disposable copy of the Guide for the AWS verification deployment.
+    repository: artifact-pages/docs
+    sourcePath: sites/guide
