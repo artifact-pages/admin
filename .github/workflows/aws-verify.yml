@@ -1,0 +1,69 @@
+# Disposable AWS verification workflow (T15 OIDC proof).
+# Manual only and separate from production.
+name: AWS verification
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Plan only, without writes.
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aws-verify-admin
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    environment: aws-verify
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: arn:aws:iam::231136241959:role/artifact-pages-aws-verify-admin-publisher
+          aws-region: us-east-1
+          role-session-name: artifact-pages-aws-verify-admin
+      - name: Deploy the web app
+        uses: artifact-pages/app-deploy-action@8ee0d56d20bc46e2ee555b73f4cc402852f158f5 # v0.2.0
+        with:
+          config: aws-verify/artifact-pages.yaml
+          dry-run: ${{ inputs.dry-run }}
+          publish-on: workflow_dispatch:refs/heads/main
+      - name: Sync the site registry
+        uses: artifact-pages/registry-action@47ff737c5751748608afc3a1cd4763696f319f45 # v0.2.0
+        with:
+          config: aws-verify/artifact-pages.yaml
+          dry-run: ${{ inputs.dry-run }}
+          publish-on: workflow_dispatch:refs/heads/main
+
+  unconfigured-subject:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Try to assume the admin role without an environment
+        id: assume
+        continue-on-error: true
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: arn:aws:iam::231136241959:role/artifact-pages-aws-verify-admin-publisher
+          aws-region: us-east-1
+          role-session-name: artifact-pages-aws-verify-negative
+      - name: Verify the unconfigured subject was rejected
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ steps.assume.outcome }}" == "success" ]]; then
+            echo "admin role accepted a subject without the aws-verify environment" >&2
+            exit 1
+          fi
+          echo "admin role rejected the unconfigured subject as expected"
