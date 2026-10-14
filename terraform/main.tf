@@ -12,8 +12,9 @@ data "cloudflare_zone" "target" {
 }
 
 module "artifact_pages" {
-  # Pin the generated module package to the tag synced from the monorepo (IMP-64).
-  source = "git::https://github.com/artifact-pages/terraform-cloudflare-artifact-pages.git?ref=v0.1.0"
+  # Public Terraform Registry package generated from the monorepo (IMP-38).
+  source  = "artifact-pages/artifact-pages/cloudflare"
+  version = "0.1.1"
 
   account_id             = var.cloudflare_account_id
   zone_id                = data.cloudflare_zone.target.zone_id
