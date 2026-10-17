@@ -8,7 +8,7 @@ aws:
   distributionId: ECFTIR5GVPQDF
   namePrefix: artifact-pages-aws-verify
 cli:
-  version: 0.4.3
+  version: 0.4.4
 web:
   version: 0.3.1
 sites:
