@@ -9,7 +9,7 @@ cloudflare:
   publicBaseURL: https://artifact-pages.dev
   # bucket defaults to artifact-pages
 cli:
-  version: 0.4.2
+  version: 0.4.3
 web:
   version: 0.3.2
 sites:
