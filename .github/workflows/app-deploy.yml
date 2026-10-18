@@ -24,7 +24,7 @@ jobs:
     environment: production
     steps:
       - name: Deploy the pinned web app
-        uses: artifact-pages/app-deploy-action@8ee0d56d20bc46e2ee555b73f4cc402852f158f5 # v0.2.0
+        uses: artifact-pages/app-deploy-action@0f7f0cf8e12c85f56d4aa7722f1fd3dcf3d58d03 # v0.3.0
         with:
           dry-run: ${{ inputs.dry-run }}
         env:
