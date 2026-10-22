@@ -23,3 +23,8 @@ sites:
     description: How Git Artifact Pages works and why. 仕組みと設計の考え方。
     repository: artifact-pages/docs
     sourcePath: sites/architecture
+  ja:
+    name: Artifact Pages ドキュメント
+    description: Artifact Pages の日本語ドキュメント。機能、導入、運用、アーキテクチャ、リファレンス。
+    repository: artifact-pages/docs
+    sourcePath: sites/ja
