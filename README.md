@@ -8,7 +8,7 @@ Production admin repository for <https://artifact-pages.dev>, the public Git Art
 | Web app deployment | `.github/workflows/app-deploy.yml` (manual) | The web bundle matching `artifact-pages/app-deploy-action@v0.2.0` |
 | Infrastructure: R2 bucket, custom domain, routing, cache, CSP and WAF rules | `terraform/` | Terraform Registry module `artifact-pages/artifact-pages/cloudflare` at `0.1.1` |
 
-The sites' content lives in their own repositories. `guide` and `architecture` are published from [artifact-pages/docs](https://github.com/artifact-pages/docs).
+The sites' content lives in their own repositories. `ja` is published from [artifact-pages/docs](https://github.com/artifact-pages/docs).
 
 ## Registry
 

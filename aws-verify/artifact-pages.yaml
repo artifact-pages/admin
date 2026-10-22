@@ -14,6 +14,6 @@ web:
 sites:
   aws-verify:
     name: AWS verify
-    description: Disposable copy of the Guide for the AWS verification deployment.
+    description: Disposable copy of the ja docs site for the AWS verification deployment.
     repository: artifact-pages/docs
-    sourcePath: sites/guide
+    sourcePath: sites/ja
