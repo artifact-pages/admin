@@ -13,18 +13,8 @@ cli:
 web:
   version: 0.4.2
 sites:
-  guide:
-    name: Guide
-    description: Adopt, publish, and read with Git Artifact Pages. 導入・公開・閲覧のガイド。
-    repository: artifact-pages/docs
-    sourcePath: sites/guide
-  architecture:
-    name: Architecture
-    description: How Git Artifact Pages works and why. 仕組みと設計の考え方。
-    repository: artifact-pages/docs
-    sourcePath: sites/architecture
   ja:
-    name: Artifact Pages ドキュメント
+    name: ja（日本語）
     description: Artifact Pages の日本語ドキュメント。機能、導入、運用、アーキテクチャ、リファレンス。
     repository: artifact-pages/docs
     sourcePath: sites/ja
