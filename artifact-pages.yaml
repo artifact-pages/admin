@@ -14,7 +14,7 @@ web:
   version: 0.4.2
 sites:
   ja:
-    name: Artifact Pages ドキュメント
+    name: ja（日本語）
     description: Artifact Pages の日本語ドキュメント。機能、導入、運用、アーキテクチャ、リファレンス。
     repository: artifact-pages/docs
     sourcePath: sites/ja
