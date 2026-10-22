@@ -11,7 +11,7 @@ cloudflare:
 cli:
   version: 0.5.2
 web:
-  version: 0.4.1
+  version: 0.4.2
 sites:
   guide:
     name: Guide
