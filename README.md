@@ -30,7 +30,7 @@ mise exec -- terraform plan -out=../.local/terraform/plan.tfplan
 mise exec -- terraform apply ../.local/terraform/plan.tfplan
 ```
 
-`terraform/mise.toml` loads `CLOUDFLARE_API_TOKEN` (Terraform token: zone `artifact-pages.dev` rules including Config Rules Edit, DNS and R2 management) from `~/.config/artifact-pages/production.env`. State is stored in the private `artifact-pages-tfstate` R2 bucket under key `admin-production`, with locking; the backend reads an external credentials profile. Do not source the backend `tfstate.env` into Terraform. See [`terraform/README.md`](terraform/README.md) for setup and safe planning instructions. A zone guard fails the plan for any zone other than `artifact-pages.dev`.
+`terraform/mise.toml` loads `CLOUDFLARE_API_TOKEN` (Terraform token: account Workers R2 Storage Write; zone `artifact-pages.dev` Config Settings Write, Cache Settings Write, Zone Transform Rules Write, Zone WAF Write, Zone Read and DNS Read) from `~/.config/artifact-pages/production.env`. Zone WAF Write is needed because production enables `waf_custom_rules`; DNS Read is only for operator verification of records and is not required by Terraform. State is stored in the private `artifact-pages-tfstate` R2 bucket under key `admin-production`, with locking; the backend reads an external credentials profile. Do not source the backend `tfstate.env` into Terraform. See [`terraform/README.md`](terraform/README.md) for setup and safe planning instructions. A zone guard fails the plan for any zone other than `artifact-pages.dev`.
 
 ## Secrets
 
