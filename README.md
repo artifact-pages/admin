@@ -34,9 +34,10 @@ mise exec -- terraform apply ../.local/terraform/plan.tfplan
 
 ## Secrets
 
-The workflows read these three secrets. Real runs (push to `main`, manual dispatch) use the `production` environment, which is limited to `main`; pull-request dry-runs run without an environment. Store the secrets as `production` environment secrets so pull requests never see write credentials:
+The workflows read these two secrets. Real runs (push to `main`, manual dispatch) use the `production` environment, which is limited to `main`; pull-request dry-runs run without an environment. Store the secrets as `production` environment secrets so pull requests never see write credentials:
 
 | Secret | Cloudflare permission |
 | --- | --- |
 | `CF_R2_ACCESS_KEY_ID`, `CF_R2_SECRET_ACCESS_KEY` | R2 key pair for bucket `artifact-pages` (Workers R2 Storage Bucket Item Write) |
-| `CF_API_TOKEN` | Cache Purge on zone `artifact-pages.dev` |
+
+CLI 0.6 never purges the CDN, so no Cloudflare API token is needed. The generated workflows still forward `CF_API_TOKEN` because `apiTokenEnv` defaults to that name; with the explicit R2 key pair the CLI never reads it, and the secret no longer exists.
