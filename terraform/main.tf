@@ -14,7 +14,7 @@ data "cloudflare_zone" "target" {
 module "artifact_pages" {
   # Public Terraform Registry package generated from the monorepo (IMP-38).
   source  = "artifact-pages/artifact-pages/cloudflare"
-  version = "0.1.1"
+  version = "0.2.0"
 
   account_id             = var.cloudflare_account_id
   zone_id                = data.cloudflare_zone.target.zone_id

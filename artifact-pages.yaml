@@ -1,6 +1,7 @@
 # Production deployment config for https://artifact-pages.dev. Non-secret:
-# credentials come from the CLI default environment names (CF_R2_ACCESS_KEY_ID,
-# CF_R2_SECRET_ACCESS_KEY, CF_API_TOKEN), supplied as repository secrets in CI.
+# credentials come from the CLI default environment names CF_R2_ACCESS_KEY_ID and
+# CF_R2_SECRET_ACCESS_KEY (an explicit R2 key pair, no API token), supplied as
+# repository secrets in CI.
 schemaVersion: 1
 provider: cloudflare
 cloudflare:
@@ -9,7 +10,7 @@ cloudflare:
   publicBaseURL: https://artifact-pages.dev
   # bucket defaults to artifact-pages
 cli:
-  version: 0.5.2
+  version: 0.6.1
 web:
   version: 0.4.7
 sites:
