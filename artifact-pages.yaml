@@ -12,7 +12,7 @@ cloudflare:
 cli:
   version: 0.6.1
 web:
-  version: 0.4.9
+  version: 0.4.10
 sites:
   ja:
     name: ja（日本語）
