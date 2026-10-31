@@ -10,3 +10,30 @@ mise exec terraform@1.16.4 -- terraform plan
 ```
 
 Use a checkout with this remote backend configuration before planning. A stale clone with the former local backend can plan against obsolete local state. Review every production plan; apply remains an owner step.
+
+## Japanese docs edge cache
+
+The response rule caches successful `/_artifacts/ja/` HTML, CSS, and JS at
+Cloudflare for one hour without changing the browser cache policy. Updated or
+deleted content may remain visible for up to one hour, and the site index's
+five-second cache can temporarily disagree with the content. A Cloudflare purge
+cannot clear content already stored in a browser cache. Removing the rule alone
+does not guarantee that existing Cloudflare cache entries are cleared.
+
+In an emergency, an administrator with Cloudflare zone purge permission can
+purge the affected prefix and verify the result; alternatively, wait for the
+TTL to expire and verify the result. This procedure has not been verified. The
+current production CLI and Terraform tokens do not have purge permission;
+permissions of other tokens are not established here.
+
+### Transition from the previous zero TTL
+
+Applying the rule does not guarantee an immediate HIT for existing cached URLs.
+Check representative existing and new URLs for the response body,
+`Cache-Control`, `CF-Cache-Status`, and `Age`. Existing entries created with
+the previous zero TTL may continue to show `REVALIDATED`. Wait for Cloudflare cache retention to expire or for normal updates to refresh
+those entries, or separately
+decide whether an authorized administrator should purge the affected prefix
+in the authenticated Cloudflare dashboard. The purge procedure is unverified.
+After a purge, check the body and watch for `MISS` or `EXPIRED` followed by
+`HIT`.
