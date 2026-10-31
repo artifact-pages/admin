@@ -22,8 +22,8 @@ run "docs_cache_response" {
   }
 
   assert {
-    condition     = length(cloudflare_ruleset.docs_cache_response.rules) == 1 && cloudflare_ruleset.docs_cache_response.rules[0].expression == "(http.host eq \"artifact-pages.dev\" and starts_with(http.request.uri.path, \"/_artifacts/ja/\") and (http.response.code eq 200 or http.response.code eq 304))"
-    error_message = "The rule must target only successful Japanese docs artifact responses on the production host."
+    condition     = length(cloudflare_ruleset.docs_cache_response.rules) == 1 && cloudflare_ruleset.docs_cache_response.rules[0].expression == "(http.host eq \"artifact-pages.dev\" and starts_with(http.request.uri.path, \"/_artifacts/ja/\") and http.request.uri.path.extension in {\"html\" \"css\" \"js\"} and (http.response.code eq 200 or http.response.code eq 304))"
+    error_message = "The rule must target only successful Japanese docs HTML, CSS, and JS responses on the production host."
   }
 
   assert {

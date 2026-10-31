@@ -36,8 +36,8 @@ resource "cloudflare_ruleset" "docs_cache_response" {
 
   rules = [{
     ref         = "docs_artifacts_edge_ttl"
-    description = "Cache successful Japanese docs artifacts at Cloudflare for one hour"
-    expression  = "(http.host eq \"artifact-pages.dev\" and starts_with(http.request.uri.path, \"/_artifacts/ja/\") and (http.response.code eq 200 or http.response.code eq 304))"
+    description = "Cache successful Japanese docs HTML, CSS, and JS at Cloudflare for one hour"
+    expression  = "(http.host eq \"artifact-pages.dev\" and starts_with(http.request.uri.path, \"/_artifacts/ja/\") and http.request.uri.path.extension in {\"html\" \"css\" \"js\"} and (http.response.code eq 200 or http.response.code eq 304))"
     action      = "set_cache_control"
     action_parameters = {
       s_maxage = {
