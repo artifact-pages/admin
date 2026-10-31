@@ -23,4 +23,17 @@ does not guarantee that existing Cloudflare cache entries are cleared.
 In an emergency, an administrator with Cloudflare zone purge permission can
 purge the affected prefix and verify the result; alternatively, wait for the
 TTL to expire and verify the result. This procedure has not been verified. The
-current tokens do not have purge permission.
+current production CLI and Terraform tokens do not have purge permission;
+permissions of other tokens are not established here.
+
+### Transition from the previous zero TTL
+
+Applying the rule does not guarantee an immediate HIT for existing cached URLs.
+Check representative existing and new URLs for the response body,
+`Cache-Control`, `CF-Cache-Status`, and `Age`. Existing entries created with
+the previous zero TTL may continue to show `REVALIDATED`. Wait for Cloudflare cache retention to expire or for normal updates to refresh
+those entries, or separately
+decide whether an authorized administrator should purge the affected prefix
+in the authenticated Cloudflare dashboard. The purge procedure is unverified.
+After a purge, check the body and watch for `MISS` or `EXPIRED` followed by
+`HIT`.
